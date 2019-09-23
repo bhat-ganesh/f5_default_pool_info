@@ -1,0 +1,14 @@
+---
+- name: COLLECT BIG-IP FACTS
+  bigip_facts:
+    include:
+      - virtual_server
+    server: "{{private_ip}}"
+    user: "{{ansible_user}}"
+    password: "{{ansible_ssh_pass}}"
+    server_port: 8443
+    validate_certs: no
+  register: device_facts
+
+- set_fact:
+    f5_default_pool: device_facts['virtual_server']['/WorkshopExample/web_app/serviceMain']['default_pool_name']
